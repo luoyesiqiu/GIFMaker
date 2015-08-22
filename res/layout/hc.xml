@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="fill_parent"
+	android:layout_width="fill_parent"
+	android:background="@drawable/tpi_background"
+	android:orientation="vertical">
+
+	<GridView
+		android:layout_height="0dp"
+		android:layout_width="match_parent"
+		android:id="@+id/list"
+		android:layout_weight="1.0"
+		android:numColumns="2"
+		android:background="@drawable/listview_style"
+		android:layout_margin="10dp">
+
+	</GridView>
+
+	<LinearLayout
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:orientation="horizontal"
+		android:gravity="center">
+
+		<Button
+			android:layout_height="50dp"
+			android:text="添加…"
+			android:layout_width="wrap_content"
+			android:layout_weight="1.0"
+			android:id="@+id/bn_add"
+			android:background="@drawable/blue_button"
+			android:layout_margin="5dp"/>
+
+		<Button
+			android:layout_height="50dp"
+			android:text="清空"
+			android:layout_width="wrap_content"
+			android:layout_weight="1.0"
+			android:id="@+id/bn_clear"
+			android:background="@drawable/blue_button"
+			android:layout_margin="5dp"/>
+
+	</LinearLayout>
+
+	<Button
+		android:layout_height="50dp"
+		android:text="合成GIF"
+		android:layout_width="match_parent"
+		android:layout_margin="10dp"
+		android:id="@+id/bn_hc"
+		android:background="@drawable/red_button"/>
+
+</LinearLayout>
+

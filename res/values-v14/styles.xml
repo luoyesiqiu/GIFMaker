@@ -1,0 +1,19 @@
+<resources>
+
+    <!--
+        Base application theme for API 14+. This theme completely replaces
+        AppBaseTheme from BOTH res/values/styles.xml and
+        res/values-v11/styles.xml on API 14+ devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <!-- API 14 theme customizations can go here. -->
+    </style>
+	
+	<style name="AnimationActivity" parent="@android:style/Animation.Activity">
+		<item name="android:activityOpenEnterAnimation">@anim/in_from_right</item>
+		<item name="android:activityOpenExitAnimation">@anim/null_anim</item>
+		<item name="android:activityCloseEnterAnimation">@anim/null_anim</item>
+		<item name="android:activityCloseExitAnimation">@anim/out_to_bottom</item>
+	</style>
+	
+</resources>

@@ -1,5 +1,27 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="@android:style/Theme.Holo.Light">
+
+    <!--
+	Base application theme, dependent on API level. This theme is replaced
+	by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+		Theme customizations available in newer API levels can go in
+		res/values-vXX/styles.xml, while customizations related to
+		backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+		<item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+		<item name="android:windowNoTitle">false</item>
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+	<style name="AnimationActivity" parent="@android:style/Animation.Activity">
+		<item name="android:activityOpenEnterAnimation">@anim/in_from_right</item>
+		<item name="android:activityOpenExitAnimation">@anim/null_anim</item>
+		<item name="android:activityCloseEnterAnimation">@anim/null_anim</item>
+		<item name="android:activityCloseExitAnimation">@anim/out_to_bottom</item>
 	</style>
 </resources>
