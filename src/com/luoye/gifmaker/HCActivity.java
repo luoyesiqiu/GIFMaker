@@ -91,7 +91,7 @@ public class HCActivity extends Activity implements Runnable,OnClickListener,OnC
 
 		sp = PreferenceManager.getDefaultSharedPreferences(this);
 		list.setOnCreateContextMenuListener(this);
-		showToast(getActionBar().getHeight()+"");
+//		showToast(getActionBar().getHeight()+"");
     }
 	@Override
 	public void onCreateContextMenu (ContextMenu p1, View p2, ContextMenu.ContextMenuInfo p3)
