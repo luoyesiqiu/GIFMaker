@@ -297,40 +297,6 @@ public class FJActivity extends Activity implements OnClickListener,GifDecoderAc
 		}
 	};
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
-	{
-		// TODO: Implement this method
-		menu.add(0, 0, 0, "设置");
-		menu.add(0, 1, 0, "使用帮助");
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		// TODO: Implement this method
-		if (item.getItemId() == 0)
-		{
-
-			startActivity(new Intent(FJActivity.this, SettingActivity.class));
-			//overridePendingTransition(R.anim.out_to_bottom, R.anim.in_from_bottom);
-		}
-		else if (item.getItemId() == 1)
-		{
-
-			adlog = new AlertDialog.Builder(this);
-			adlog.setTitle("使用帮助")
-				.setMessage(getResources().getString(R.string.help2))
-				.setNegativeButton("确定", null)
-				.setIcon(android.R.drawable.ic_menu_help)
-				.show();
-		}
-		return super.onOptionsItemSelected(item);
-
-	}
-
-
 	public void showToast(CharSequence text)
 	{
 		Toast.makeText(FJActivity.this, text, 2000).show();

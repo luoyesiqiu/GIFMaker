@@ -29,8 +29,8 @@
 			android:layout_width="wrap_content"
 			android:layout_weight="1.0"
 			android:id="@+id/bn_add"
-			android:background="@drawable/blue_button"
-			android:layout_margin="5dp"/>
+			android:layout_margin="5dp"
+			android:background="@drawable/blue_button"/>
 
 		<Button
 			android:layout_height="50dp"

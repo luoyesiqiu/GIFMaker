@@ -44,6 +44,8 @@ import com.luoye.gifmaker.core.*;
 import com.luoye.gifmaker.other.*;
 import android.util.*;
 import android.app.*;
+import android.view.*;
+import java.lang.reflect.*;
 
 public class HCActivity extends Activity implements Runnable,OnClickListener,OnCreateContextMenuListener
 {
@@ -92,6 +94,7 @@ public class HCActivity extends Activity implements Runnable,OnClickListener,OnC
 		sp = PreferenceManager.getDefaultSharedPreferences(this);
 		list.setOnCreateContextMenuListener(this);
 //		showToast(getActionBar().getHeight()+"");
+		
     }
 	@Override
 	public void onCreateContextMenu (ContextMenu p1, View p2, ContextMenu.ContextMenuInfo p3)
@@ -329,39 +332,6 @@ public class HCActivity extends Activity implements Runnable,OnClickListener,OnC
 			})
 			.setNegativeButton("取消", null).show();
 	}
-	@Override
-	public boolean onCreateOptionsMenu (Menu menu)
-	{
-		// TODO: Implement this method
-		menu.add(0, 0, 0, "设置");
-		menu.add(0, 1, 0, "使用帮助");
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected (MenuItem item)
-	{
-		// TODO: Implement this method
-		if (item.getItemId() == 0)
-		{
-
-			startActivity(new Intent(HCActivity.this, SettingActivity.class));
-			//overridePendingTransition(R.anim.out_to_bottom, R.anim.in_from_bottom);
-		}
-		else if (item.getItemId() == 1)
-		{
-
-			adlog = new AlertDialog.Builder(this);
-			adlog.setTitle("使用帮助")
-				.setMessage(getResources().getString(R.string.help2))
-				.setNegativeButton("确定", null)
-				.setIcon(android.R.drawable.ic_menu_help)
-				.show();
-		}
-		return super.onOptionsItemSelected(item);
-
-	}
-
 
 	public void showToast (CharSequence text)
 	{
