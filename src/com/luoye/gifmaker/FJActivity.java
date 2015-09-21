@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import android.R.integer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -29,11 +31,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnCreateContextMenuListener;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.Toast;
 import android.widget.*;
 import android.os.*;
 import com.luoye.gifmaker.*;
@@ -58,6 +55,10 @@ public class FJActivity extends Activity implements OnClickListener,GifDecoderAc
 	AlertDialog.Builder adlog;
 	int curIndex;
 	final String THIS_ACTION="fjAction";
+	
+	class MenuId{
+		public final static int ID_REMOVE_ITEM=200;
+	};
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -87,7 +88,7 @@ public class FJActivity extends Activity implements OnClickListener,GifDecoderAc
 				public void onCreateContextMenu(ContextMenu p1, View p2, ContextMenu.ContextMenuInfo p3)
 				{
 					// TODO: Implement this method
-					p1.add(0, 0, 0, "移除该图片");
+					p1.add(0, MenuId.ID_REMOVE_ITEM, 0, "移除该图片");
 				}
 			});
     }
@@ -100,7 +101,7 @@ public class FJActivity extends Activity implements OnClickListener,GifDecoderAc
 		AdapterContextMenuInfo menuInfo =
 			(AdapterContextMenuInfo) item.getMenuInfo();
 		// TODO: Implement this method
-		if (item.getItemId() == 0)
+		if (item.getItemId() == MenuId.ID_REMOVE_ITEM)
 		{
 			//移除项
 			items.remove(menuInfo.position);

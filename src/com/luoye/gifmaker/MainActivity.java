@@ -14,7 +14,7 @@ import android.net.*;
 
 public class MainActivity extends TabActivity
 {
-	
+
 	//String alipay="https://qr.alipay.com/ap3jg6uth85ml1xa56";
 	TabHost tabHost; 
     TabSpec spec;
@@ -47,6 +47,12 @@ public class MainActivity extends TabActivity
 		tabHost.setCurrentTab(0);
 		forceShowOverflowMenu();
     }
+	class MenuId{
+		public final static int ID_DONATE_ITEM=0;//捐献
+		public final static int ID_SETTING_ITEM=1;//设置
+		public final static int ID_HELP_ITEM=2;//帮助
+		
+	};
 	private void forceShowOverflowMenu() {
 		try {
 			ViewConfiguration config = ViewConfiguration.get(this);
@@ -70,9 +76,9 @@ public class MainActivity extends TabActivity
 	public boolean onCreateOptionsMenu (Menu menu)
 	{
 		// TODO: Implement this method
-		menu.add(0, 2, 0, "捐赠…");
-		menu.add(0, 0, 0, "设置");
-		menu.add(0, 1, 0, "使用帮助");
+		menu.add(0, MenuId.ID_DONATE_ITEM, 0, "捐赠…");
+		menu.add(0, MenuId.ID_SETTING_ITEM, 0, "设置");
+		menu.add(0, MenuId.ID_HELP_ITEM, 0, "使用帮助");
 		
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -82,13 +88,13 @@ public class MainActivity extends TabActivity
 	public boolean onOptionsItemSelected (MenuItem item)
 	{
 		// TODO: Implement this method
-		if (item.getItemId() == 0)
+		if (item.getItemId() == MenuId.ID_SETTING_ITEM)
 		{
 
 			startActivity(new Intent(MainActivity.this, SettingActivity.class));
 			//overridePendingTransition(R.anim.out_to_bottom, R.anim.in_from_bottom);
 		}
-		else if (item.getItemId() == 1)
+		else if (item.getItemId() == MenuId.ID_HELP_ITEM)
 		{
 
 			adlog = new AlertDialog.Builder(this);
@@ -99,7 +105,7 @@ public class MainActivity extends TabActivity
 				.show();
 		}
 		//捐赠
-		else if(item.getItemId()==2)
+		else if(item.getItemId()==MenuId.ID_DONATE_ITEM)
 		{
 			Intent it = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.Alipay))); 
 			it.setClassName("com.android.browser", "com.android.browser.BrowserActivity"); 

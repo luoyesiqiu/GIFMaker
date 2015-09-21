@@ -65,6 +65,11 @@ public class HCActivity extends Activity implements Runnable,OnClickListener,OnC
 	final String THIS_ACTION= "hcAction";
 	//final String ywfs="http://ywfs.blog.163.com/";
     /** Called when the activity is first created. */
+	class MenuId{
+		public final static int ID_SETDELAY_ITEM=100;
+		public final static int ID_REMOVE_ITEM=101;
+	};
+	
     @Override
     public void onCreate (Bundle savedInstanceState)
 	{
@@ -102,8 +107,8 @@ public class HCActivity extends Activity implements Runnable,OnClickListener,OnC
 		// TODO: Implement this method
 		//p1.setHeaderTitle("选项");
 		//第二个参数是id
-		p1.add(0, 0, 0, "设置持续时间");
-		p1.add(0, 1, 0, "移除该图片");
+		p1.add(0, MenuId.ID_SETDELAY_ITEM, 0, "设置持续时间");
+		p1.add(0, MenuId.ID_REMOVE_ITEM, 0, "移除该图片");
 
 	}
 
@@ -114,12 +119,12 @@ public class HCActivity extends Activity implements Runnable,OnClickListener,OnC
 		AdapterContextMenuInfo menuInfo =
 			(AdapterContextMenuInfo) item.getMenuInfo();
 		// TODO: Implement this method
-		if (item.getItemId() == 0)
+		if (item.getItemId() == MenuId.ID_SETDELAY_ITEM)
 		{
 			//修改持续时间
 			showEditTextDialog(HCActivity.this, "设置该图持续的时间(秒)", menuInfo.position);
 		}
-		else if (item.getItemId() == 1)
+		else if (item.getItemId() == MenuId.ID_REMOVE_ITEM)
 		{
 			//移除项
 			items.remove(menuInfo.position);
