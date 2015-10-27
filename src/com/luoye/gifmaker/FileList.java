@@ -18,9 +18,11 @@ import android.view.View.OnCreateContextMenuListener;
 import android.widget.AbsListView.*;
 import com.luoye.gifmaker.*;
 import com.luoye.gifmaker.other.*;
+import android.media.*;
 public class FileList extends Activity implements OnScrollListener
 {
 
+	MediaPlayer mp;
 	ListView list;
 	SimpleAdapter adapter;
 	static List<File> dirs;
