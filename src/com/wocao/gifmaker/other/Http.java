@@ -1,4 +1,4 @@
-package com.luoye.gifmaker.other;
+package com.wocao.gifmaker.other;
 import org.apache.http.client.methods.*;
 import org.apache.http.client.*;
 import org.apache.http.util.*;

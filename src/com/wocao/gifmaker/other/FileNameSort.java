@@ -1,4 +1,4 @@
-package com.luoye.gifmaker.other;
+package com.wocao.gifmaker.other;
 import java.util.*;
 import java.io.*;
 

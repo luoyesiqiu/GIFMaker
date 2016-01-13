@@ -1,4 +1,4 @@
-package com.luoye.gifmaker.other;
+package com.wocao.gifmaker.other;
 import android.graphics.*;
 import java.io.*;
 import java.util.*;

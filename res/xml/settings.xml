@@ -73,13 +73,13 @@
 
 	</PreferenceCategory>
 	<PreferenceCategory
-		android:title="关于软件">
-		<Preference
+		android:title="作者信息">
+	
+	<Preference
+		android:title=""
 			android:key="about"
-			android:title="作者"
-			android:summary="落叶似秋"
-		/>
-
+			android:summary="软件作者：卧槽工作室\n猛戳此处加群群反馈\n爱你(^з^)">
+	</Preference>
 	</PreferenceCategory>
 </PreferenceScreen>
 <!--

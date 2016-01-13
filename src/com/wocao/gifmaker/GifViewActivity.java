@@ -1,4 +1,4 @@
-package com.luoye.gifmaker;
+package com.wocao.gifmaker;
 import org.json.JSONObject;
 
 import android.app.*;
@@ -9,9 +9,9 @@ import android.widget.*;
 import android.view.*;
 import android.content.*;
 import android.app.AlertDialog.*;
-import com.luoye.gifmaker.*;
-import com.luoye.gifmaker.core.*;
-import com.luoye.gifmaker.other.*;
+import com.wocao.gifmaker.*;
+import com.wocao.gifmaker.core.*;
+import com.wocao.gifmaker.other.*;
 import android.graphics.*;
 import java.io.*;
 

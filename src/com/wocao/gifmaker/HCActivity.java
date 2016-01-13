@@ -1,4 +1,4 @@
-package com.luoye.gifmaker;
+package com.wocao.gifmaker;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -39,9 +39,9 @@ import android.widget.SimpleAdapter;
 import android.widget.SimpleAdapter.ViewBinder;
 import android.widget.Toast;
 import android.os.*;
-import com.luoye.gifmaker.*;
-import com.luoye.gifmaker.core.*;
-import com.luoye.gifmaker.other.*;
+import com.wocao.gifmaker.*;
+import com.wocao.gifmaker.core.*;
+import com.wocao.gifmaker.other.*;
 import android.util.*;
 import android.app.*;
 import android.view.*;
@@ -63,6 +63,8 @@ public class HCActivity extends Activity implements Runnable,OnClickListener,OnC
 	String nowStr;
 	AlertDialog.Builder adlog;
 	final String THIS_ACTION= "hcAction";
+	
+	
 	//final String ywfs="http://ywfs.blog.163.com/";
     /** Called when the activity is first created. */
     @Override
@@ -102,8 +104,8 @@ public class HCActivity extends Activity implements Runnable,OnClickListener,OnC
 		// TODO: Implement this method
 		//p1.setHeaderTitle("选项");
 		//第二个参数是id
-		p1.add(0, 0, 0, "设置持续时间");
-		p1.add(0, 1, 0, "移除该图片");
+		p1.add(0, MainActivity.MENU_SETDELAY, 0, "设置持续时间");
+		p1.add(0, MainActivity.MENU_REMOVE, 0, "移除该图片");
 
 	}
 
@@ -114,12 +116,12 @@ public class HCActivity extends Activity implements Runnable,OnClickListener,OnC
 		AdapterContextMenuInfo menuInfo =
 			(AdapterContextMenuInfo) item.getMenuInfo();
 		// TODO: Implement this method
-		if (item.getItemId() == 0)
+		if (item.getItemId() == MainActivity.MENU_SETDELAY)
 		{
 			//修改持续时间
 			showEditTextDialog(HCActivity.this, "设置该图持续的时间(秒)", menuInfo.position);
 		}
-		else if (item.getItemId() == 1)
+		else if (item.getItemId() == MainActivity.MENU_REMOVE)
 		{
 			//移除项
 			items.remove(menuInfo.position);

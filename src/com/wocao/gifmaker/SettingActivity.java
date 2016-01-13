@@ -1,16 +1,19 @@
-package com.luoye.gifmaker;
+package com.wocao.gifmaker;
 
 import android.preference.*;
 import android.preference.Preference.*;
 import android.os.*;
 import android.content.*;
-import com.luoye.gifmaker.*;
+import com.wocao.gifmaker.*;
+import android.view.View.*;
+import android.net.*;
 
 public class SettingActivity extends PreferenceActivity
 {
 	CheckBoxPreference cb_use_first_size;
 
 	EditTextPreference edit_delay,edit_output_path1,edit_output_path2,edit_pic_height,edit_pic_width;
+	Preference about;
 	boolean isSelected;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -23,7 +26,7 @@ public class SettingActivity extends PreferenceActivity
 
 		edit_pic_width = (EditTextPreference)findPreference("edit_pic_width");
 		edit_pic_height = (EditTextPreference)findPreference("edit_pic_height");
-
+		about=findPreference("about");
 		isSelected=cb_use_first_size.isChecked();
 		setTwoEditEnabled();
 
@@ -39,8 +42,23 @@ public class SettingActivity extends PreferenceActivity
 					return true;
 				}
 			});
-	}
+		about.setOnPreferenceClickListener(new OnPreferenceClickListener(){
 
+				@Override
+				public boolean onPreferenceClick(Preference p1)
+				{
+					// TODO: Implement this method
+					Intent intent = new Intent(Intent.ACTION_VIEW);
+					intent.setData(Uri.parse(getResources().getString(R.string.QQGroup)));
+					startActivity(intent);
+					return true;
+				}
+				
+
+			});
+			
+	}
+	
 	public void setTwoEditEnabled()
 	{
 		if (isSelected&&edit_pic_height.isEnabled())

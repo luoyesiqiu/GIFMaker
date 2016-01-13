@@ -1,4 +1,4 @@
-package com.luoye.gifmaker;
+package com.wocao.gifmaker;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -36,9 +36,9 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 import android.widget.*;
 import android.os.*;
-import com.luoye.gifmaker.*;
-import com.luoye.gifmaker.core.*;
-import com.luoye.gifmaker.other.*;
+import com.wocao.gifmaker.*;
+import com.wocao.gifmaker.core.*;
+import com.wocao.gifmaker.other.*;
 
 public class FJActivity extends Activity implements OnClickListener,GifDecoderAction
 {
@@ -87,7 +87,7 @@ public class FJActivity extends Activity implements OnClickListener,GifDecoderAc
 				public void onCreateContextMenu(ContextMenu p1, View p2, ContextMenu.ContextMenuInfo p3)
 				{
 					// TODO: Implement this method
-					p1.add(0, 0, 0, "移除该图片");
+					p1.add(0, MainActivity.MENU_REMOVE, 0, "移除该图片");
 				}
 			});
     }
@@ -100,7 +100,7 @@ public class FJActivity extends Activity implements OnClickListener,GifDecoderAc
 		AdapterContextMenuInfo menuInfo =
 			(AdapterContextMenuInfo) item.getMenuInfo();
 		// TODO: Implement this method
-		if (item.getItemId() == 0)
+		if (item.getItemId() == MainActivity.MENU_REMOVE)
 		{
 			//移除项
 			items.remove(menuInfo.position);

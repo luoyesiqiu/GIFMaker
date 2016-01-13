@@ -1,4 +1,4 @@
-package com.luoye.gifmaker;
+package com.wocao.gifmaker;
 
 import android.app.*;
 import android.content.*;
@@ -16,8 +16,8 @@ import java.util.*;
 
 import android.view.View.OnCreateContextMenuListener;
 import android.widget.AbsListView.*;
-import com.luoye.gifmaker.*;
-import com.luoye.gifmaker.other.*;
+import com.wocao.gifmaker.*;
+import com.wocao.gifmaker.other.*;
 import android.media.*;
 public class FileList extends Activity implements OnScrollListener
 {
