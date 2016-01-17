@@ -40,7 +40,7 @@ public class FileList extends Activity implements OnScrollListener
 
 	static String broadcastAction="Action";
 	static String selectedFilePath=null;
-	static String curpath="/mnt/sdcard";
+	static String curpath=null;
 	static String filter="";
 	List<Map<String, Object>> items;
 	Map<String, Object> item;
