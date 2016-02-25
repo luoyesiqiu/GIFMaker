@@ -76,9 +76,9 @@ public class FJActivity extends Activity implements OnClickListener,GifDecoderAc
 		IntentFilter intentFilter=new IntentFilter();
 		intentFilter.addAction(THIS_ACTION);
 		registerReceiver(br, intentFilter);
-		FileList.curpath = Environment.getExternalStorageDirectory().getAbsolutePath();
+		FileListAct.curpath = Environment.getExternalStorageDirectory();
 		//FileList.filter = ".*.gif$";
-		FileList.broadcastAction = THIS_ACTION;
+		FileListAct.broadcastAction = THIS_ACTION;
 		initAdapter();
 		sp = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -210,7 +210,7 @@ public class FJActivity extends Activity implements OnClickListener,GifDecoderAc
 		{
 
 			Intent intent=new Intent();
-			intent.setClass(FJActivity.this, FileList.class);
+			intent.setClass(FJActivity.this, FileListAct.class);
 			startActivity(intent);
 			//overridePendingTransition(R.anim.out_to_bottom, R.anim.in_from_bottom);
 		}
@@ -258,9 +258,9 @@ public class FJActivity extends Activity implements OnClickListener,GifDecoderAc
 		public void run()
 		{
 			// TODO: Implement this method
-			FileList.filter = ".*.gif$";
+			FileListAct.filter = ".*.gif$";
 
-			FileList.getListFromPath(FileList.curpath);
+			FileListAct.getListFromPath(FileListAct.curpath);
 		}
 
 
@@ -281,13 +281,13 @@ public class FJActivity extends Activity implements OnClickListener,GifDecoderAc
 			// TODO: Implement this method
 			if (p2.getAction().equals(THIS_ACTION))
 			{
-				bitmapItem = IO.getImageFromPath(FileList.selectedFilePath);
+				bitmapItem = IO.getImageFromPath(FileListAct.selectedFilePath);
 
 				item = new HashMap<String, Object>();    
 				item.put("imageItem", bitmapItem); 
-				item.put("filePath", FileList.selectedFilePath);
-				item.put("fileName", new File(FileList.selectedFilePath).getName());  
-				item.put("shortName",FileList.getShortName(new File(FileList.selectedFilePath).getName(),12,2));
+				item.put("filePath", FileListAct.selectedFilePath);
+				item.put("fileName", new File(FileListAct.selectedFilePath).getName());  
+				item.put("shortName",FileListAct.getShortName(new File(FileListAct.selectedFilePath).getName(),12,2));
 				items.add(item);  
 
 				adapter.notifyDataSetChanged();
@@ -338,11 +338,11 @@ public class FJActivity extends Activity implements OnClickListener,GifDecoderAc
 	{
 		//窗口被重新激活时发生
 		// TODO: Implement this method
-		FileList.filter = ".*.gif$";
-		FileList.broadcastAction = THIS_ACTION;
+		FileListAct.filter = ".*.gif$";
+		FileListAct.broadcastAction = THIS_ACTION;
 		//清空缓存数组
-		FileList.dirs_cache = null;
-		FileList.files_cache = null;
+		
+		FileListAct.filesList_cache = null;
 		//开启线程载入列表
 		new Thread(loadFileList).start();
 //		FileList.dirs_name = null;

@@ -15,7 +15,7 @@ public class IO
 		BitmapFactory.decodeFile( filePath,opts );  
 
 		//缩放图片，避免内存不足
-		opts.inSampleSize = computeSampleSize( opts,-1,250 * 250 );  
+		opts.inSampleSize = computeSampleSize( opts,-1,500 * 500 );  
 		opts.inJustDecodeBounds = false;  
 
 		try
@@ -36,7 +36,7 @@ public class IO
 		opts.inJustDecodeBounds = true; 
 		BitmapFactory.decodeFile( filePath,opts );
 		//缩放图片，避免内存不足
-		opts.inSampleSize = computeSampleSize( opts,-1,100 * 100 );
+		opts.inSampleSize = computeSampleSize( opts,-1,500 * 500 );
 		opts.inJustDecodeBounds = false;  
 
 		bitmap = BitmapFactory.decodeFile( filePath,opts );  

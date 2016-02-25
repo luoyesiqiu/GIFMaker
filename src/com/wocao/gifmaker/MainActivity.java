@@ -70,7 +70,7 @@ public class MainActivity extends TabActivity
 	public boolean onCreateOptionsMenu (Menu menu)
 	{
 		// TODO: Implement this method
-		menu.add(0, MENU_PAY, 0, "捐赠…");
+		
 		menu.add(0, MENU_SETTING, 0, "设置");
 		menu.add(0, MENU_HELP, 0, "使用帮助");
 		
@@ -93,17 +93,12 @@ public class MainActivity extends TabActivity
 
 			adlog = new AlertDialog.Builder(this);
 			adlog.setTitle("使用帮助")
-				.setMessage(getResources().getString(R.string.help2)+getResources().getString(R.string.help))
+				.setMessage(getResources().getString(R.string.help2))
 				.setNegativeButton("确定", null)
 				.setIcon(android.R.drawable.ic_menu_help)
 				.show();
 		}
-		//捐赠
-		else if(item.getItemId()==MENU_PAY)
-		{
-			startActivity(new Intent(Intent.ACTION_VIEW).setData(
-			Uri.parse("https://ds.alipay.com/?from=mobilecodec&scheme=alipayqr%3A%2F%2Fplatformapi%2Fstartapp%3FsaId%3D10000007%26clientVersion%3D3.7.0.0718%26qrcode%3Dhttps%253A%252F%252Fqr.alipay.com%252Fapnoqaf9r0mcxg7fa3%253F_s%253Dweb-other")));
-		}
+		
 		return super.onOptionsItemSelected(item);
 
 	}

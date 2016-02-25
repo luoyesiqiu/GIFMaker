@@ -86,8 +86,8 @@ public class HCActivity extends Activity implements Runnable,OnClickListener,OnC
 		intentFilter.addAction(THIS_ACTION);
 		registerReceiver(br, intentFilter);
 		//FileList.curpath = "/mnt/sdcard";
-		FileList.curpath = Environment.getExternalStorageDirectory().getAbsolutePath();
-		FileList.broadcastAction = THIS_ACTION;
+		FileListAct.curpath = Environment.getExternalStorageDirectory();
+		FileListAct.broadcastAction = THIS_ACTION;
 		initAdapter();
 		formatter = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss"); 
 		//广告初始化
@@ -178,9 +178,9 @@ public class HCActivity extends Activity implements Runnable,OnClickListener,OnC
 		public void run ()
 		{
 			// TODO: Implement this method
-			FileList.filter = ".*.jpg|.*.png|.*.bmp|.*.gif$";
+			FileListAct.filter = ".*.jpg|.*.png|.*.bmp|.*.gif$";
 			//FileList.curpath=;
-			FileList.getListFromPath(FileList.curpath);
+			FileListAct.getListFromPath(FileListAct.curpath);
 		}
 
 
@@ -239,7 +239,7 @@ public class HCActivity extends Activity implements Runnable,OnClickListener,OnC
 		{
 
 			Intent intent=new Intent();
-			intent.setClass(HCActivity.this, FileList.class);
+			intent.setClass(HCActivity.this, FileListAct.class);
 			startActivity(intent);
 			//overridePendingTransition(R.anim.out_to_bottom, R.anim.in_from_bottom);
 		}
@@ -295,13 +295,13 @@ public class HCActivity extends Activity implements Runnable,OnClickListener,OnC
 			// TODO: Implement this method
 			if (p2.getAction().equals(THIS_ACTION))
 			{
-				bitmapItem = IO.getImageFromPath(FileList.selectedFilePath);
+				bitmapItem = IO.getImageFromPath(FileListAct.selectedFilePath);
 
 				item = new HashMap<String, Object>();    
 				item.put("imageItem", bitmapItem); 
-				item.put("filePath", FileList.selectedFilePath);
-				item.put("fileName", new File(FileList.selectedFilePath).getName());
-				item.put("shortName", FileList.getShortName(new File(FileList.selectedFilePath).getName(), 4, 2));
+				item.put("filePath", FileListAct.selectedFilePath);
+				item.put("fileName", new File(FileListAct.selectedFilePath).getName());
+				item.put("shortName", FileListAct.getShortName(new File(FileListAct.selectedFilePath).getName(), 4, 2));
 				item.put("delay", sp.getString("edit_dely", "0.5"));
 
 				items.add(item);  
@@ -395,11 +395,10 @@ public class HCActivity extends Activity implements Runnable,OnClickListener,OnC
 		//当Activity被重新激活时
 		//要重新给动作和筛选条件重新赋值
 		//不让两个Activity的ListView和选择文件时乱
-		FileList.broadcastAction = THIS_ACTION;
-		FileList.filter = ".*.jpg|.*.png|.*.bmp|.*.gif$";
+		FileListAct.broadcastAction = THIS_ACTION;
+		FileListAct.filter = ".*.jpg|.*.png|.*.bmp|.*.gif$";
 		//清空缓存数组
-		FileList.dirs_cache = null;
-		FileList.files_cache = null;
+		FileListAct.filesList_cache = null;
 		//开启线程载入列表
 		new Thread(loadFileList).start();
 		//FileList.dirs_name=null;

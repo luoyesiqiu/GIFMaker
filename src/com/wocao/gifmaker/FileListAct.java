@@ -19,28 +19,27 @@ import android.widget.AbsListView.*;
 import com.wocao.gifmaker.*;
 import com.wocao.gifmaker.other.*;
 import android.media.*;
-public class FileList extends Activity implements OnScrollListener
+public class FileListAct extends Activity implements OnScrollListener
 {
 
-	MediaPlayer mp;
-	ListView list;
+	OnClickListener w;
+	GridView list;
 	SimpleAdapter adapter;
-	static List<File> dirs;
-	static List<File> files;
+	static List<File> filesList;
 	//缓存上层目录
 	/*******************
 	 *缓存有两种情况被清空
 	 *1，按返回上层目录之后。
 	 *2，重新载入Activity后
 	 ********************/
-	static List<File> dirs_cache;
-	static List<File> files_cache;
+	
+	static List<File> filesList_cache;
 
 	Map<String,String> map_paths_name,map_files;
 
 	static String broadcastAction="Action";
 	static String selectedFilePath=null;
-	static String curpath=null;
+	static File curpath=null;
 	static String filter="";
 	List<Map<String, Object>> items;
 	Map<String, Object> item;
@@ -51,7 +50,7 @@ public class FileList extends Activity implements OnScrollListener
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.filelist);
-		list = (ListView)findViewById(R.id.file_list);
+		list = (GridView)findViewById(R.id.file_list);
 		try
 		{
 			//getListFromPath(curpath);
@@ -62,7 +61,7 @@ public class FileList extends Activity implements OnScrollListener
 		catch (Exception e)
 		{//错误时获取根目录
 		
-			curpath = "/";
+			curpath = new File("/");
 			getListFromPath(curpath);
 			loadList();
 		}
@@ -72,7 +71,7 @@ public class FileList extends Activity implements OnScrollListener
 				@Override
 				public void onCreateContextMenu (ContextMenu p1, View p2, ContextMenu.ContextMenuInfo p3)
 				{ 
-					if (((AdapterContextMenuInfo)p3).position > (dirs.size()))
+					if (filesList.get(((AdapterContextMenuInfo)p3).position-1).isFile() )
 						p1.add(0, 0, 0, "查看图片");
 				}
 			});
@@ -85,30 +84,29 @@ public class FileList extends Activity implements OnScrollListener
 				{
 					// TODO: Implement this method
 					//点击返回上级时
-					if (position == 0 && !curpath.equals("/"))
+					if (position == 0 && !curpath.toString().equals("/"))
 					{
 						goBack();
 					}
 
 					//点击文件夹时,这里要注意数组的范围
-					else if ((position == 0 && curpath.equals("/")) || (position < (dirs.size() + 1) && position > 0))
+					else if ((position == 0 && curpath.toString().equals("/")) || filesList.get(position-1).isDirectory())
 					{
-						//FileList.this.setTitle("载入中……");
-						//showToast("载入中……");
+						
 						try
 						{
-							dirs_cache = dirs;
-							files_cache = files;
+							
+							filesList_cache = filesList;
 
 							//对根目录的处理
-							if (curpath.equals("/"))
+							if (curpath.toString().equals("/"))
 							{
-								curpath = "";
-								curpath = curpath + "/" + dirs.get(position).getName();
+								
+								curpath =new File( curpath + "/" + filesList.get(position).getName());
 							}
 							else
 							{
-								curpath = curpath + "/" + dirs.get(position - 1).getName();
+								curpath =new File (curpath + "/" + filesList.get(position - 1).getName());
 							}
 
 							getListFromPath(curpath);
@@ -120,25 +118,25 @@ public class FileList extends Activity implements OnScrollListener
 						catch (Exception e)
 						{
 							//发生异常时，当前路径不变，并重新载入列表
-							File f=new File(curpath);
-							curpath = f.getParent();
+							
+							curpath =new File( curpath.getParent());
 							getListFromPath(curpath);
 							loadList();
 							//如果有图片则载入图片
 							loadVisiableListItemImages(0, 10);
 							adapter.notifyDataSetChanged();
-							showToast("抱歉，发生了错误！" + "\n" + e.toString());
+							showToast("抱歉，该文件夹不能访问！" + "\n" + e.toString());
 						}
 					}
 
 					//点击文件时
-					else if (position > (dirs.size() - 1))
+					else if (filesList.get(position-1).isFile())
 					{
 						//if ((curpath.charAt(curpath.length() - 1) == '/'))
 						//curpath = curpath.substring(0, curpath.length() - 1);
-						selectedFilePath =  curpath + "/" + files.get(position - 1 - dirs.size()).getName();
+						selectedFilePath =  curpath + "/" + filesList.get(position -1).getName();
 
-						showToast("文件：" + files.get(position - 1 - dirs.size()).getName() + " 已添加到列表");
+						showToast("文件：" + filesList.get(position-1).getName() + " 已添加到列表");
 						//结束
 						//FileListActivity.this.finish();
 						//发送广播
@@ -149,13 +147,14 @@ public class FileList extends Activity implements OnScrollListener
 
 				}
 			});
+			getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
 	public void onBackPressed()
 	{
 		// TODO: Implement this method
-		if(curpath.equals("/"))
+		if(curpath.toString().equals("/"))
 			finish();
 			else
 				goBack();
@@ -170,15 +169,15 @@ public class FileList extends Activity implements OnScrollListener
 	{
 		try
 		{
-			curpath = new File(curpath).getParent();
+			curpath = new File(curpath.getParent());
 			//缓存都不为空时才能使用缓存
-			if (dirs_cache != null && files_cache != null)
+			if (filesList_cache != null)
 			{
-				dirs = dirs_cache;
-				files = files_cache;
+				
+				filesList = filesList_cache;
 				//使用后清空缓存
-				dirs_cache = null;
-				files_cache = null;
+				
+				filesList_cache = null;
 			}
 			//没有缓存就重新获取列表
 			else
@@ -268,14 +267,9 @@ public class FileList extends Activity implements OnScrollListener
 		{
 			//预览
 			//showToast(files.get(menuInfo.position - dirs.size()-1).getName());
-//			Intent intent = new Intent("android.intent.action.VIEW");
-//			intent.addCategory("android.intent.category.DEFAULT");
-//			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//			Uri uri = Uri.fromFile(new File(curpath + "/" + files.get(menuInfo.position - dirs.size() - 1)));
-//			intent.setDataAndType(uri, "image/*");
-//			startActivity(intent);
-			Intent intent=new Intent(FileList.this,GifViewActivity.class);
-			intent.putExtra("imagePath",curpath + "/" + files.get(menuInfo.position - dirs.size() - 1).getName());
+
+			Intent intent=new Intent(FileListAct.this,GifViewActivity.class);
+			intent.putExtra("imagePath",curpath + "/" + filesList.get(menuInfo.position - 1).getName());
 			startActivity(intent);
 
 		}
@@ -289,38 +283,31 @@ public class FileList extends Activity implements OnScrollListener
 		//getListFromPath(curpath);
 		items = new ArrayList<Map<String,Object>>(); 
 		//添加返回上级目录项
-		if (!curpath.equals("/"))
+		if (!curpath.getAbsolutePath().equals("/"))
 		{
 			item = new HashMap<String, Object>();  
 			item.put("iconItem", R.drawable.folder);  
 			item.put("nameItem", ".."); 
-			item.put("sizeItem", "");
+			//item.put("sizeItem", "");
 			item.put("modifyItem", "");
 			item.put("isFile", false);
 			items.add(item);  
 		}
 		//添加文件夹项
-        for (int i = 0; i < dirs.size() ; i++)
-		{  
-            item = new HashMap<String, Object>();  
-            item.put("iconItem", R.drawable.folder);  
-            item.put("nameItem", dirs.get(i).getName()); 
-			item.put("sizeItem", "");
-			item.put("modifyItem", getDate(dirs.get(i).lastModified()));
-			item.put("isFile", false);
-            items.add(item);  
-        }  
+        
 		//添加文件项
-		for (int i = 0; i < files.size() ; i++)
+		for (int i = 0; i < filesList.size() ; i++)
 		{
 			item = new HashMap<String, Object>();  
-			tempName = files.get(i).getName();
-
-			item.put("nameItem", files.get(i).getName());  
-			item.put("sizeItem", formetFileSize(getFileSizes(files.get(i))));
-			item.put("modifyItem", getDate(files.get(i).lastModified()));
-			item.put("filePath", files.get(i).getAbsolutePath());
-			item.put("isFile", true);
+			tempName = filesList.get(i).getName();
+			//是文件夹才添加图标
+			item.put("iconItem", filesList.get(i).isDirectory()?R.drawable.folder:null);  
+			//文件就不写文件名了
+			item.put("nameItem", filesList.get(i).isFile()?"":filesList.get(i).getName());
+			//是文件才添加大小
+			//item.put("sizeItem", filesList.get(i).isFile()?formetFileSize(getFileSizes(filesList.get(i))):"");
+			item.put("filePath", filesList.get(i).getAbsolutePath());
+			item.put("isFile", filesList.get(i).isFile());
 			items.add(item);  
 		}
 
@@ -329,8 +316,8 @@ public class FileList extends Activity implements OnScrollListener
 		adapter = 
 			new SimpleAdapter(this, items, 
 							  R.layout.filelist_item, 					  
-							  new String[]{"iconItem", "nameItem","modifyItem","sizeItem"}, 
-							  new int[]{R.id.filelist_icon, R.id.filelist_name,R.id.filelist_date,R.id.filelist_size});  
+							  new String[]{"iconItem", "nameItem"}, 
+							  new int[]{R.id.filelist_icon, R.id.filelist_name});  
 		//list中放bitmap
 		adapter.setViewBinder(new ViewBinder(){
 				public boolean setViewValue (View view, Object data, String str)
@@ -349,7 +336,7 @@ public class FileList extends Activity implements OnScrollListener
 		list.setAdapter(adapter);
 
 		//显示的更加人性化
-		setTitle(getShortPath(curpath));
+		setTitle(getShortPath(curpath.toString()));
 		//getActionBar().setTitle(getShortPath(curpath));
 	}
 
@@ -378,45 +365,37 @@ public class FileList extends Activity implements OnScrollListener
 		return path;
 	}
 	//载入列表到数组
-	public static  void getListFromPath (String path)
+	public static  void getListFromPath (File path)
 	{
-		files = new ArrayList<File>();
-        dirs = new ArrayList<File>();
-
-        File file = new File(path);
-        File[] files_all = file.listFiles();
+		filesList = new ArrayList<File>();
+        File[] files_all = path.listFiles();
 
 		//不是根目录添加返回项
 		for (int i=0;i < files_all.length;i++)
 		{
-			//添加文件夹
-			if (files_all[i].isDirectory())
+			if ((files_all[i].isFile() && files_all[i].getName().matches(filter))||files_all[i].isDirectory())
 			{
-				dirs.add(files_all[i]);
+				filesList.add(files_all[i]);
 			}
-			//添加文件
-			else if (files_all[i].isFile() && files_all[i].getName().matches(filter))
-			{
-				files.add(files_all[i]);
-			}
+			
 		}
-		//对数组进行排列
-		Collections.sort(dirs, new FileNameSort());
-		Collections.sort(files, new FileNameSort());
+		//对集合进行排列
+		
+		Collections.sort(filesList, new FileNameSort());
 	}
 
 	
 	
 	public void showToast (CharSequence text)
 	{
-		Toast.makeText(FileList.this, text, 2000).show();
+		Toast.makeText(FileListAct.this, text, 2000).show();
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu (Menu menu)
 	{
 		// TODO: Implement this method
-		menu.add(0, 0, 0, "返回");
+		//menu.add(0, 0, 0, "返回");
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -424,7 +403,7 @@ public class FileList extends Activity implements OnScrollListener
 	public boolean onOptionsItemSelected (MenuItem item)
 	{
 		// TODO: Implement this method
-		if (item.getItemId() == 0)
+		if (item.getItemId() == android.R.id.home)
 		{
 			finish();
 		}

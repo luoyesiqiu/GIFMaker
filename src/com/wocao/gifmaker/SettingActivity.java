@@ -26,7 +26,7 @@ public class SettingActivity extends PreferenceActivity
 
 		edit_pic_width = (EditTextPreference)findPreference("edit_pic_width");
 		edit_pic_height = (EditTextPreference)findPreference("edit_pic_height");
-		about=findPreference("about");
+//		about=findPreference("about");
 		isSelected=cb_use_first_size.isChecked();
 		setTwoEditEnabled();
 
@@ -42,20 +42,20 @@ public class SettingActivity extends PreferenceActivity
 					return true;
 				}
 			});
-		about.setOnPreferenceClickListener(new OnPreferenceClickListener(){
-
-				@Override
-				public boolean onPreferenceClick(Preference p1)
-				{
-					// TODO: Implement this method
-					Intent intent = new Intent(Intent.ACTION_VIEW);
-					intent.setData(Uri.parse(getResources().getString(R.string.QQGroup)));
-					startActivity(intent);
-					return true;
-				}
-				
-
-			});
+//		about.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+//
+//				@Override
+//				public boolean onPreferenceClick(Preference p1)
+//				{
+//					// TODO: Implement this method
+//					Intent intent = new Intent(Intent.ACTION_VIEW);
+//					intent.setData(Uri.parse(getResources().getString(R.string.QQGroup)));
+//					startActivity(intent);
+//					return true;
+//				}
+//				
+//
+//			});
 			
 	}
 	

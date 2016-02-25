@@ -15,6 +15,16 @@ public class FileNameSort implements Comparator<File>
 	public int compare(File p1, File p2)
 	{
 		// TODO: Implement this method
-		return p1.getName().compareToIgnoreCase(p2.getName());
+		if ((p1.isFile() && p2.isFile()) || (!p1.isFile() && !p2.isFile()))
+		{
+			return p1.getName().compareToIgnoreCase(p2.getName());
+		}
+		else if (p1.isFile() && !p2.isFile())
+		{
+			return 1;
+		}
+		else{
+			return -1;
+		}
 	}
 }
